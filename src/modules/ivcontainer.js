@@ -20,7 +20,7 @@ export default (state = initialState, action) => {
     let newState = _.merge({}, state);
     let containerIndex = -1;
 
-    if (action.container && action.container.id) {
+    if (action.container && typeof action.container.id !== undefined) {
         containerIndex = _.findIndex(state.containers, (o) => { return o.id === action.container.id });
     }
 

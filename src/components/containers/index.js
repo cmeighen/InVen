@@ -3,7 +3,13 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import ContainerForm from './components/newContainerForm';
+import ContainerPage from './components/containerPage';
+import ContainerForm from './components/containerForm';
+import ContainerIndexItem from './components/containerIndexItem';
+
+import Modal from '../general/modal';
+
+import './index.css';
 
 class ContainersPage extends React.Component {
     constructor(props) {
@@ -11,7 +17,8 @@ class ContainersPage extends React.Component {
 
         this.state = {
             containers: props.containers,
-            selectedContainerId: 0
+            selectedContainerId: 0,
+            isModalOpen: false
         }
     }
 
@@ -21,21 +28,49 @@ class ContainersPage extends React.Component {
         });
     }
 
+    openModal = () => {
+        this.setState(() => {
+            return {
+                isModalOpen: true
+            }
+        })
+    }
+
+    closeModal = () => {
+        this.setState(() => {
+            return {
+                isModalOpen: false
+            }
+        })
+    }
+
+    selectContainer = (id) => {
+        this.setState(() => {
+            return {
+                selectedContainerId: id
+            }
+        })
+    }
+
     render() {
         let allContainers = this.state.containers.map((container) => {
-            return (
-                <div key={container.id}>
-                    <h2>{container.name} (id:{container.id})</h2>
-                    <p>{container.description}</p>
-                </div>
-            )
-        })
+             return (
+                 <ContainerIndexItem container={container} key={container.id} onClick={() => { this.selectContainer(container.id) }} selected={this.state.selectedContainerId === container.id} />
+             )
+        });
+
+        let selectedContainer = _.get(this.state.containers, this.state.selectedContainerId);
 
         return (
             <div>
-                <h1>InVen v.01</h1>
-                {allContainers}
-                <ContainerForm parentContainer={_.find(this.state.containers, { id: this.state.selectedContainerId })} />
+                <div className="container-index">
+                    {allContainers}
+                </div>
+                <ContainerPage container={selectedContainer} />
+                <Modal isOpen={this.state.isModalOpen} onClose={this.closeModal} >
+                    <ContainerForm parentContainer={_.find(this.state.containers, { id: this.state.selectedContainerId })} onSubmit={this.closeModal} />
+                </Modal>
+                <button onClick={this.openModal} value="Open Modal">Open Modal</button>
             </div>
         )
     }

@@ -1,0 +1,57 @@
+.container-index {
+    width: 200px;
+    position: absolute;
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, .1);
+    border-right: 1px solid black;
+    overflow: hidden;
+
+    &__row {
+        background-color: white;
+        padding: 5px;
+        border-bottom: 1px solid black;
+        cursor: pointer;
+
+        &:hover {
+            background-color: blue;
+        }
+
+        &--selected {
+            background-color: gray;
+        }
+    }
+}
+
+.container-page {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 200px;
+    right: 0;
+
+    &__body {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 200px;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    &__option-bar {
+        background-color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: auto;
+        width: 200px;
+        padding: 20px;
+        border-left: 1px solid black;
+    }
+}

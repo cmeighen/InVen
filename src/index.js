@@ -5,11 +5,14 @@ import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 import App from './components/app';
 import registerServiceWorker from './registerServiceWorker';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import './index.css'
+import 'normalize.css';
+import './index.css';
 
 const target = document.querySelector('#root')
 
+injectTapEventPlugin();
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

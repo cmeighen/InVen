@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,17 +15,16 @@ class ContainerForm extends React.Component {
             id: null,
             name: "",
             description: "",
-            parentId: props.parentContainer.id
+            parentId: _.get(props.parentContainer, 'id') || null
         }
+
         this.state = {
             container: props.container || defaultContainer
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
@@ -35,22 +35,28 @@ class ContainerForm extends React.Component {
         });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
 
-        if (this.state.container.id) {
+        if (typeof this.state.container.id !== undefined) {
             this.props.editIVContainer(this.state.container);
         } else {
             this.props.addIVContainer(this.state.container);
         }
+
+        this.props.onSubmit();
     }
 
     render() {
+        var formText = typeof this.state.container.id !== undefined ? "Edit Container" : "Create Container";
+        var parentContainer = this.props.parentContainer ? (
+            <h3>Parent Container: {this.props.parentContainer.name} (id: {this.props.parentContainer.id})</h3>
+        ) : null;
         return (
             <div>
-                <h2>New Container Form</h2>
+                <h2>{formText}</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <h3>Parent Container: {this.props.parentContainer.name} (id: {this.props.parentContainer.id})</h3>
+                    {parentContainer}
                     <label>
                         Container Name:
                         <input type="text" name="name" value={this.state.container.name} onChange={this.handleChange} />
@@ -59,7 +65,7 @@ class ContainerForm extends React.Component {
                         Description:
                         <input type="text" name="description" value={this.state.container.description} onChange={this.handleChange} />
                     </label>
-                    <input type="submit" value="Create Container" />
+                    <input type="submit" value={formText} />
                 </form>
             </div>
         );
