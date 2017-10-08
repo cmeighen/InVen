@@ -15,7 +15,8 @@ class ContainerForm extends React.Component {
             id: null,
             name: "",
             description: "",
-            parentId: _.get(props.parentContainer, 'id') || null
+            parentId: _.get(props.parentContainer, 'id') || null,
+            image: null
         }
 
         this.state = {

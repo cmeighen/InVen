@@ -4,10 +4,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import ContainerPage from './components/containerPage';
-import ContainerForm from './components/containerForm';
+import {GridList} from 'material-ui/GridList';
 import ContainerIndexItem from './components/containerIndexItem';
-
-import Modal from '../general/modal';
 
 import './index.css';
 
@@ -18,30 +16,30 @@ class ContainersPage extends React.Component {
         this.state = {
             containers: props.containers,
             selectedContainerId: 0,
-            isModalOpen: false
+            isModalOpen: false,
+            windowWidth: 900
         }
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions = () => {
+        this.setState({
+            windowWidth: window.innerWidth
+        })
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState({
             containers: nextProps.containers
         });
-    }
-
-    openModal = () => {
-        this.setState(() => {
-            return {
-                isModalOpen: true
-            }
-        })
-    }
-
-    closeModal = () => {
-        this.setState(() => {
-            return {
-                isModalOpen: false
-            }
-        })
     }
 
     selectContainer = (id) => {
@@ -61,16 +59,20 @@ class ContainersPage extends React.Component {
 
         let selectedContainer = _.get(this.state.containers, this.state.selectedContainerId);
 
+        let gridCols = this.state.windowWidth > 899 ? 2 : 1;
+
         return (
             <div>
                 <div className="container-index">
-                    {allContainers}
+                    <GridList 
+                        className="grid-list"
+                        cellHeight={200}
+                        cols={gridCols}
+                    >
+                        {allContainers}
+                    </GridList>
                 </div>
                 <ContainerPage container={selectedContainer} />
-                <Modal isOpen={this.state.isModalOpen} onClose={this.closeModal} >
-                    <ContainerForm parentContainer={_.find(this.state.containers, { id: this.state.selectedContainerId })} onSubmit={this.closeModal} />
-                </Modal>
-                <button onClick={this.openModal} value="Open Modal">Open Modal</button>
             </div>
         )
     }
