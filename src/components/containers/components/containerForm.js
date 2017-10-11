@@ -15,7 +15,7 @@ class ContainerForm extends React.Component {
             id: null,
             name: "",
             description: "",
-            parentId: _.get(props.parentContainer, 'id') || null,
+            parentId: props.parentContainerId,
             image: null
         }
 
@@ -39,7 +39,7 @@ class ContainerForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        if (typeof this.state.container.id !== undefined) {
+        if (this.state.container.id !== null) {
             this.props.editIVContainer(this.state.container);
         } else {
             this.props.addIVContainer(this.state.container);
@@ -49,7 +49,7 @@ class ContainerForm extends React.Component {
     }
 
     render() {
-        var formText = typeof this.state.container.id !== undefined ? "Edit Container" : "Create Container";
+        var formText = this.state.container.id !== null ? "Edit Container" : "Create Container";
         var parentContainer = this.props.parentContainer ? (
             <h3>Parent Container: {this.props.parentContainer.name} (id: {this.props.parentContainer.id})</h3>
         ) : null;

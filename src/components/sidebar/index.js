@@ -75,7 +75,7 @@ class InvenSideBar extends React.Component {
                     <GridList />
                 </div>
                 <div className="inven-sidebar__bottom">
-                    <BottomBar />
+                    <BottomBar selectedContainerId={selectedContainer.id} />
                 </div>
             </div>
         )
