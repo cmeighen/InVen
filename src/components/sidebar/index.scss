@@ -1,20 +1,21 @@
 .inven-sidebar {
     position: absolute;
-    background-color: gray;
     left: 0;
     top: 0;
     bottom: 0;
     width: 350px;
+    background-color: rgba(0, 0, 0, 0.3);
 
     &__top {
         position: absolute;
         top: 0;
         width: 100%;
         height: 180px;
-        background-color: red;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         flex-wrap: 'wrap';
+        border-bottom: 1px solid #000;
+        border-right: 1px solid #000;
     }
 
     &__middle {
@@ -23,11 +24,12 @@
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: blue;
         margin-top: 180px;
         margin-bottom: 75px;
-        display: flex;
         justify-content: space-around;
+        overflow: scroll;
+        border-bottom: 1px solid #000;
+        border-right: 1px solid #000;
     }
 
     &__bottom {
@@ -35,8 +37,8 @@
         height: 75px;
         left: 0;
         bottom: 0;
-        background-color: yellow;
         width: 100%;
+        border-right: 1px solid #000;
     }
 
     &__grid-list {

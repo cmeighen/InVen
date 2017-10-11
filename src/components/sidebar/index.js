@@ -30,13 +30,21 @@ class InvenSideBar extends React.Component {
         selectedContainer.image = 'https://i.imgur.com/hZjtIcH.png';
         topBarContainers.push(selectedContainer);
 
-        let gridListStyle = {
-            paddingTop: 15
+        let topGridListStyle = {
+            paddingTop: 15,
+            paddingLeft: 12
+        }
+
+        let midGridListStyle = {
+            paddingTop: 15,
+            paddingLeft: 12
         }
 
         let gridTileStyle = {
             width: 150,
-            height: 150
+            height: 150,
+            border: '1px solid #000',
+            boxShadow: '5px 5px 10px #000'
         }
 
         let gridTileTitleStyle = {
@@ -49,11 +57,13 @@ class InvenSideBar extends React.Component {
             fontSize: 10
         }
 
+        let childrenContainers = _.filter(this.props.containers, { parentId: selectedContainer.id });
+
         return (
             <div className="inven-sidebar">
                 <div className="inven-sidebar__top">
                     <GridList
-                        style={gridListStyle}
+                        style={topGridListStyle}
                     >
                         {topBarContainers.map((container) => (
                             <GridTile
@@ -72,7 +82,24 @@ class InvenSideBar extends React.Component {
                     </GridList>
                 </div>
                 <div className="inven-sidebar__middle">
-                    <GridList />
+                    <GridList
+                        style={midGridListStyle}
+                    >
+                        {childrenContainers.map((container) => (
+                            <GridTile
+                                key={container.id}
+                                title={container.name}
+                                subtitle="Container"
+                                actionIcon={<IconButton onClick={() => this.props.selectContainer(container.id)}><StarBorder color="white" /></IconButton>}
+                                style={gridTileStyle}
+                                titleStyle={gridTileTitleStyle}
+                                titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+                                subtitleStyle={gridTileSubTitleStyle}
+                            >
+                                <img src='https://i.imgur.com/hZjtIcH.png' />
+                            </GridTile>
+                        ))}
+                    </GridList>
                 </div>
                 <div className="inven-sidebar__bottom">
                     <BottomBar selectedContainerId={selectedContainer.id} />
