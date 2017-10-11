@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { history } from '../../store';
 
 import InvenSideBar from '../sidebar';
 
@@ -13,7 +14,6 @@ class ContainerPage extends React.Component {
 
         this.state = {
             containers: props.containers,
-            selectedContainerId: props.match.params.id,
             isModalOpen: false,
             windowWidth: 900
         }
@@ -28,19 +28,15 @@ class ContainerPage extends React.Component {
     }
 
     selectContainer = (id) => {
-        this.setState(() => {
-            return {
-                selectedContainerId: id
-            }
-        })
+        history.push('/container/' + id);
     }
 
     render() {
 
         return (
             <div>
-                <InvenSideBar containers={this.state.containers} selectedContainerId={this.state.selectedContainerId} />
-                loooooooooooooooooooooooooooooooooooooooooooooooooooooooool {this.state.selectedContainerId}
+                <InvenSideBar containers={this.state.containers} selectedContainerId={this.props.match.params.id} selectContainer={this.selectContainer} />
+                loooooooooooooooooooooooooooooooooooooooooooooooooooooooool {this.props.match.params.id}
             </div>
         )
     }

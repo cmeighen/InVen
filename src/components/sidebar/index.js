@@ -5,33 +5,30 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 
+import BottomBar from './components/botBar';
+
 import './index.css';
 
 class InvenSideBar extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            selectedContainerId: props.selectedContainerId,
-            containers: props.containers,
-            items: props.items
-        }
     }
 
     render() {
         let topBarContainers = [];
-        let selectedContainer = _.get(this.state.containers, this.state.selectedContainerId);
-        let parentContainerId = selectedContainer.parentContainerId;
-        let parentContainer = typeof parentContainerId !== 'undefined' ? _.get(this.state.containers, parentContainerId) : null;
+        let selectedContainer = _.get(this.props.containers, this.props.selectedContainerId);
+        let parentContainerId = selectedContainer.parentId;
+        let parentContainer = typeof parentContainerId !== 'undefined' ? _.get(this.props.containers, parentContainerId) : null;
+
+        if (parentContainer) {
+            parentContainer.subTitle = "Parent Container";
+            parentContainer.image = "https://i.imgur.com/hZjtIcH.png";
+            topBarContainers.push(parentContainer);
+        }
 
         selectedContainer.subTitle = "Selected Container";
         selectedContainer.image = 'https://i.imgur.com/hZjtIcH.png';
         topBarContainers.push(selectedContainer);
-
-        if (parentContainer) {
-            parentContainer.subTitle = "Parent Container";
-            topBarContainers.push(parentContainer);
-        }
 
         let gridListStyle = {
             paddingTop: 15
@@ -63,7 +60,7 @@ class InvenSideBar extends React.Component {
                                 key={container.id}
                                 title={container.name}
                                 subtitle={<span>{container.subTitle}</span>}
-                                actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+                                actionIcon={<IconButton onClick={() => this.props.selectContainer(container.id)}><StarBorder color="white" /></IconButton>}
                                 style={gridTileStyle}
                                 titleStyle={gridTileTitleStyle}
                                 titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
@@ -78,6 +75,7 @@ class InvenSideBar extends React.Component {
                     <GridList />
                 </div>
                 <div className="inven-sidebar__bottom">
+                    <BottomBar />
                 </div>
             </div>
         )

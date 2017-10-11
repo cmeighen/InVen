@@ -46,3 +46,12 @@
         overflow-y: auto;
     }
 }
+
+.bottom-bar-menu {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    top: 13px;
+    left: 13px;
+    right: 13px;
+}
