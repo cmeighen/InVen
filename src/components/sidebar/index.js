@@ -32,7 +32,10 @@ class InvenSideBar extends React.Component {
 
         let topGridListStyle = {
             paddingTop: 15,
-            paddingLeft: 12
+            paddingLeft: 12,
+            justifyContent: 'space-between',
+            width: 340
+            
         }
 
         let midGridListStyle = {
@@ -44,7 +47,8 @@ class InvenSideBar extends React.Component {
             width: 150,
             height: 150,
             border: '1px solid #000',
-            boxShadow: '5px 5px 10px #000'
+            boxShadow: '5px 5px 10px #000',
+            cursor: 'pointer'
         }
 
         let gridTileTitleStyle = {
@@ -70,7 +74,7 @@ class InvenSideBar extends React.Component {
                                 key={container.id}
                                 title={container.name}
                                 subtitle={<span>{container.subTitle}</span>}
-                                actionIcon={<IconButton onClick={() => this.props.selectContainer(container.id)}><StarBorder color="white" /></IconButton>}
+                                onClick={() => this.props.selectContainer(container.id)}
                                 style={gridTileStyle}
                                 titleStyle={gridTileTitleStyle}
                                 titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
@@ -90,7 +94,7 @@ class InvenSideBar extends React.Component {
                                 key={container.id}
                                 title={container.name}
                                 subtitle="Container"
-                                actionIcon={<IconButton onClick={() => this.props.selectContainer(container.id)}><StarBorder color="white" /></IconButton>}
+                                onClick={() => this.props.selectContainer(container.id)}
                                 style={gridTileStyle}
                                 titleStyle={gridTileTitleStyle}
                                 titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"

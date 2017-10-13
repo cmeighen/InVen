@@ -62,10 +62,12 @@ class ContainerForm extends React.Component {
                         Container Name:
                         <input type="text" name="name" value={this.state.container.name} onChange={this.handleChange} />
                     </label>
+                    <br />
                     <label>
                         Description:
                         <input type="text" name="description" value={this.state.container.description} onChange={this.handleChange} />
                     </label>
+                    <br />
                     <input type="submit" value={formText} />
                 </form>
             </div>

@@ -27,7 +27,8 @@
         margin-top: 180px;
         margin-bottom: 75px;
         justify-content: space-around;
-        overflow: scroll;
+        overflow-y: scroll;
+        overflow-x: hidden;
         border-bottom: 1px solid #000;
         border-right: 1px solid #000;
     }

@@ -1,10 +1,11 @@
-import _ from 'lodash'
-import React from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import _ from 'lodash';
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { history } from '../../store';
 
 import InvenSideBar from '../sidebar';
+import ContainerInfo from './components/containerInfo';
 
 import './index.css';
 
@@ -13,17 +14,8 @@ class ContainerPage extends React.Component {
         super(props);
 
         this.state = {
-            containers: props.containers,
             isModalOpen: false,
             windowWidth: 900
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.containers) {
-            this.setState({
-                containers: nextProps.containers
-            });
         }
     }
 
@@ -32,11 +24,13 @@ class ContainerPage extends React.Component {
     }
 
     render() {
+        let selectedContainerId = this.props.match.params.id;
+        let selectedContainer = _.get(this.props.containers, selectedContainerId);
 
         return (
             <div>
-                <InvenSideBar containers={this.state.containers} selectedContainerId={this.props.match.params.id} selectContainer={this.selectContainer} />
-                loooooooooooooooooooooooooooooooooooooooooooooooooooooooool {this.props.match.params.id}
+                <InvenSideBar containers={this.props.containers} selectedContainerId={selectedContainerId} selectContainer={this.selectContainer} />
+                <ContainerInfo container={selectedContainer} />
             </div>
         )
     }
